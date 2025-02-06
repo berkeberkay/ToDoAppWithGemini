@@ -1,12 +1,11 @@
+from fastapi import APIRouter, Depends, HTTPException, Request
 from typing import Annotated
-
 from pydantic import BaseModel
-from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from starlette import status
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
-from fastapi.requests import Request
-from database import SessionLocal
-from models import User
+from ..database import SessionLocal
+from ..models import User
 from passlib.context import CryptContext
 from jose import JWTError, jwt
 from datetime import datetime, timedelta, timezone
@@ -16,7 +15,7 @@ router = APIRouter(
     tags=["Authentication"],
 )
 
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="app/templates")
 
 SECRET_KEY = "32dfsfsdf147aeuruıaısfkjhasafss23958392skfnksateıweavnn"
 ALGORITHM = "HS256"
@@ -97,7 +96,7 @@ def register_page(request: Request):
     return templates.TemplateResponse("register.html", {"request": request})
 
 
-@router.post("/", status_code=201)
+@router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_user(db : db_dependency, create_user_request: CreateUserRequest):
     user = User(
         username=create_user_request.username,

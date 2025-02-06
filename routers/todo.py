@@ -1,13 +1,9 @@
-from http.client import HTTPException
-from fastapi import  Depends, Path, APIRouter
-from numpy.testing.print_coercion_tables import print_new_cast_table
+from fastapi import  Depends, Path, APIRouter, HTTPException, Request
 from pydantic import BaseModel,Field
 from starlette import status
-from fastapi.requests import Request
 from starlette.responses import RedirectResponse
-from fastapi.exceptions import HTTPException
-from database import engine, SessionLocal
-from models import Base, Todo
+from ..database import engine, SessionLocal
+from ..models import Base, Todo
 from sqlalchemy.orm import Session
 from typing import Annotated
 from routers.auth import get_current_user
@@ -26,7 +22,7 @@ router = APIRouter(
     tags=["Todo"],
 )
 
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="app/templates")
 
 class ToDoRequest(BaseModel):
     title: str = Field( min_length=3, max_length=50)
