@@ -5,9 +5,15 @@ FEATURES
 
 
 User Authentication with JWT
+
 Task (To-Do) Management API
+
 Database Integration using SQLAlchemy
+
 Role-Based Access Control
+
 Static File Support
+
 Built-in Swagger UI
+
 Dockerized Deployment
